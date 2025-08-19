@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import static pekopeko.afpa.Utility.RegexUtility.*;
+import static pekopeko.afpa.model.Client.sc;
 import static pekopeko.afpa.view.viewBibliotheque.menu;
 
 public class Livre {
@@ -93,6 +94,28 @@ public class Livre {
     }
 
     public static void afficherLivre() {
+        try {
+            System.out.println("Voici la liste des livres : ");
+            if(livres.isEmpty()){
+                System.out.println("La liste des livres est vide : ");
+                System.out.println(" ");
+            }
+            for(Livre livre : livres){
+                System.out.println("");
+                System.out.println("- Titre du livre : " +livre.getTitreLivre());
+                System.out.println("- Auteur du livre : " + livre.getAuteurLivre());
+                System.out.println("- Quantité du livre : " + livre.getQuantiteLivre());
+                System.out.println("- ISBN du livre : " + livre.getIsbn());
+            }
+        }catch (Exception e){
+            System.out.println("Erreur : Le nom du livre : " + e.getMessage());
+        }
+        System.out.println(" ");
+        System.out.println("Saisir [0] pour revenir au menu : ");
+        int revenir = sc.nextInt();
+        if (revenir == 0) {
+            menu();
+        }
     }
 
     // Getters et Setters

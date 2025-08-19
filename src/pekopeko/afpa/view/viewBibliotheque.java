@@ -14,7 +14,7 @@ public class viewBibliotheque {
         try{
             System.out.println("Voici le menu : [choisir entre 1-6 et 0 pour quitter]");
             System.out.println("1 - Enregistrer un nouvel abonné : ");
-            System.out.println("2 - Enrgistrer un nouveau livre : ");
+            System.out.println("2 - Enregistrer un nouveau livre : ");
             System.out.println("3 - Enregistrer un nouveau pret : ");
             System.out.println("4 - Afficher les abonnées : ");
             System.out.println("5 - Afficher la liste des livres : ");

@@ -3,19 +3,19 @@ package pekopeko.afpa.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StaffModel extends PersonneModel{
+public class Staff extends Personne {
     //attribut du Staff
     private int  id;
 
-    private static List<StaffModel> staffs = new ArrayList<StaffModel>();
+    private static List<Staff> staffs = new ArrayList<Staff>();
 
     //contructeur pour le Staff qui extends de Personne
-    public StaffModel(String nom, String prenom, int id) {
+    public Staff(String nom, String prenom, int id) {
         super(nom, prenom);
         this.id = id;
     }
 
-    public static List<StaffModel> getStaffs() {
+    public static List<Staff> getStaffs() {
         return staffs;
     }
 

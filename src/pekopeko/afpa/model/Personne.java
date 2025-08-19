@@ -1,12 +1,12 @@
 package pekopeko.afpa.model;
 
-public class PersonneModel {
+public class Personne {
     //attribut de la classe personne
     private String nom;
     private String prenom;
 
     //constructeur de peronne avec  2 param nom et prenom
-    public PersonneModel(String nom, String prenom) {
+    public Personne(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;
     }
@@ -27,4 +27,15 @@ public class PersonneModel {
     public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
+
+//    @Override
+//    public String toString() {
+//        StringBuilder personne = new StringBuilder();
+//        personne.append("Nom : ");
+//        personne.append(this.nom).append(this.nom).append("\n");
+//        personne.append(", Prenom :");
+//        personne.append(this.prenom).append(this.prenom).append("\n");
+//
+//        return personne.toString();
+//    }
 }

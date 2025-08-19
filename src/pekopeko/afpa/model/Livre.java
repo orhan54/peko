@@ -3,7 +3,7 @@ package pekopeko.afpa.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LivreModel {
+public class Livre {
     //attributs du Livre
     private int idIsbn;
     private String titreLivre;
@@ -11,10 +11,10 @@ public class LivreModel {
     private int quantiteLivre;
 
     //List des livres enregistrée
-    private static List<LivreModel> livres = new ArrayList<LivreModel>();
+    private static List<Livre> livres = new ArrayList<Livre>();
 
     //constructeur du livre avec tout les parametres
-    public LivreModel(String titreLivre, String auteurLivre, int quantiteLivre, int idIsbn) {
+    public Livre(String titreLivre, String auteurLivre, int quantiteLivre, int idIsbn) {
         this.titreLivre = titreLivre;
         this.auteurLivre = auteurLivre;
         this.quantiteLivre = quantiteLivre;
@@ -22,8 +22,12 @@ public class LivreModel {
     }
 
     //affichage des livres enregistrée
-    public static List<LivreModel> getLivres() {
+    public static List<Livre> getLivres() {
         return livres;
+    }
+
+    public static void createLivre() {
+
     }
 
     // Getters et Setters

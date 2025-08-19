@@ -16,9 +16,24 @@ package pekopeko.afpa.controller;
 //TODO : revue de code et amélioration
 //TODO : Javadoc du projet
 
+import static pekopeko.afpa.view.viewBibliotheque.menu;
 
 public class Main {
     public static void main(String[] args) {
-
+        try {
+            Main main = new Main();
+            main.run();
+        }catch (Exception e){
+            System.out.println("Erreur au lancement du programme " + e.getMessage());
+        }
     }
+
+    public void run() {
+        try {
+            menu();
+        }catch (Exception e){
+            System.out.println("Erreur au lancement de la vue accueil " + e.getMessage());
+        }
+    }
+
 }

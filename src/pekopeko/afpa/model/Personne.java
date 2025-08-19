@@ -28,14 +28,14 @@ public class Personne {
         this.prenom = prenom;
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder personne = new StringBuilder();
-//        personne.append("Nom : ");
-//        personne.append(this.nom).append(this.nom).append("\n");
-//        personne.append(", Prenom :");
-//        personne.append(this.prenom).append(this.prenom).append("\n");
-//
-//        return personne.toString();
-//    }
+    @Override
+    public String toString() {
+        StringBuilder personne = new StringBuilder();
+        personne.append("Nom : ");
+        personne.append(this.nom).append("\n");
+        personne.append("Prenom :");
+        personne.append(this.prenom).append("\n");
+
+        return personne.toString();
+    }
 }

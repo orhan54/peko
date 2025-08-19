@@ -3,6 +3,7 @@ package pekopeko.afpa.view;
 import pekopeko.afpa.Utility.RegexUtility;
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
+import pekopeko.afpa.model.Pret;
 
 import java.util.Scanner;
 
@@ -40,6 +41,18 @@ public class viewBibliotheque {
                     break;
                 case 2:
                     Livre.createLivre();
+                    break;
+                case 3:
+                    Pret.pretLivre();
+                    break;
+                case 4:
+                    Client.afficherClient();
+                    break;
+                case 5:
+                    Livre.afficherLivre();
+                    break;
+                case 6:
+                    Pret.afficherPret();
                     break;
                 case 0:
                     System.out.println("Vous avez quitter l'application : ");

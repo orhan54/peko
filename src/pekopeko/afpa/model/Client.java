@@ -1,7 +1,5 @@
 package pekopeko.afpa.model;
 
-import pekopeko.afpa.Utility.RegexUtility;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -36,6 +34,27 @@ public class Client extends Personne {
         return clients;
     }
 
+    public static void afficherClient() {
+        try{
+            System.out.println("voici la liste des clients : ");
+            if (clients.isEmpty()) {
+                System.out.println("        La liste des clients est vide !!   =(      ");
+                System.out.println("");
+            }
+            for (Client client : clients) {
+                System.out.println(client);
+            }
+        }catch(Exception e){
+            System.err.println("Erreur : "+e.getMessage());
+        }
+        System.out.println(" ");
+        System.out.println("Saisir [0] pour revenir au menu : ");
+        int revenir = sc.nextInt();
+        if (revenir == 0) {
+            menu();
+        }
+    }
+
     //Getters et Setters pour acceder au attributs private
     public String getEmail() {
         return this.email;
@@ -57,6 +76,7 @@ public class Client extends Personne {
     public static void createClient() {
         try{
             System.out.println("Créer un client : ");
+            sc.nextLine();
 
             //verification du nom avec le regexAlpha
             do {
@@ -90,7 +110,7 @@ public class Client extends Personne {
             Client.clients.add(client);
 
             System.out.println("");
-            System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + " est inscrit le  " + client.getDateCreationFormatee() + " ]");
+            System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
             System.out.println(" ");
             System.out.println("Saisir 0 pour revenir au menu : ");
             int saisie = sc.nextInt();
@@ -102,9 +122,10 @@ public class Client extends Personne {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        return super.toString() + "email : " + email +
-//                " est inscrit : " + this.getDateCreationFormatee();
-//    }
+    @Override
+    public String toString() {
+        System.out.println("==================================================");
+        return super.toString() + "email : " + email + ("\n") +
+                "est inscrit : " + this.getDateCreationFormatee();
+    }
 }

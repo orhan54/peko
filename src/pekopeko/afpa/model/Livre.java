@@ -86,7 +86,13 @@ public class Livre {
         for (int i = 0; i < 10; i++) {
             isbn.append(random.nextInt(10)); // Ajoute un chiffre entre 0 et 9
         }
+        if(isbn.length()!=10){
+            System.out.println("Error ISBN du livre : ");
+        }
         return isbn.toString();
+    }
+
+    public static void afficherLivre() {
     }
 
     // Getters et Setters

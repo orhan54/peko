@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 public class RegexUtility {
     //attribut regex
     private static String POSITIVE_INT_REGEX = "\\d+";
-    private static final String ALPHA = "^[a-zA-Z]+$";
-    private static final String ALPHA_NUMERIC = "^[a-zA-Z0-9_.-]*$";
+    private static final String ALPHA = "^[\\p{L}'-]+(?:\\s[\\p{L}'-]+)*$";
+    private static final String ALPHA_NUMERIC = "/^(?:[^\\d\\W][\\-\\s\\']{0,1}){2,20}$";
 
     public static boolean PositifInt (String input) {
         return input != null && input.matches(POSITIVE_INT_REGEX);

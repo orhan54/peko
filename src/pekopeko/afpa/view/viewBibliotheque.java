@@ -7,6 +7,8 @@ import pekopeko.afpa.model.Pret;
 
 import java.util.Scanner;
 
+import static pekopeko.afpa.Utility.RegexUtility.regexAlpha;
+
 public class viewBibliotheque {
 
     static Scanner sc = new Scanner(System.in); // Lecture du clavier
@@ -40,7 +42,7 @@ public class viewBibliotheque {
                     Client.createClient();
                     break;
                 case 2:
-                    Livre.createLivre();
+                    createLivre();
                     break;
                 case 3:
                     Pret.pretLivre();
@@ -49,7 +51,7 @@ public class viewBibliotheque {
                     Client.afficherClient();
                     break;
                 case 5:
-                    Livre.afficherLivre();
+                    afficherLivre();
                     break;
                 case 6:
                     Pret.afficherPret();
@@ -63,4 +65,78 @@ public class viewBibliotheque {
 
     }
 
+    private static void afficherLivre() {
+
+        System.out.println("Voici la liste des livres : ");
+        if(Livre.getLivres().isEmpty()){
+            System.out.println("La liste des livres est vide : ");
+            System.out.println(" ");
+        } else {
+            for (Livre livre : Livre.getLivres()) {
+                System.out.println("");
+                System.out.println("- Titre du livre : " + livre.getTitreLivre());
+                System.out.println("- Auteur du livre : " + livre.getAuteurLivre());
+                System.out.println("- Quantité du livre : " + livre.getQuantiteLivre());
+                System.out.println("- ISBN du livre : " + livre.getIsbn());
+            }
+        }
+        System.out.println(" ");
+        System.out.println("Saisir [0] pour revenir au menu : ");
+        int revenir = sc.nextInt();
+        if (revenir == 0) {
+            menu();
+        }
+    }
+
+    private static void createLivre() {
+
+        String isbn;
+        String titreLivre;
+        String auteurLivre;
+        int quantiteLivre;
+
+        do{
+            System.out.print("Nom du livre : ");
+            titreLivre = sc.nextLine().toUpperCase();
+            if(titreLivre.length()<1 || !regexAlpha(titreLivre) || titreLivre == null){
+                System.out.println("Error sur le nom du livre : ");
+            }
+        }while(titreLivre.length()<1 || titreLivre == null);
+
+        do{
+            System.out.print("Auteur du livre : ");
+            auteurLivre = sc.nextLine().toUpperCase();
+            if(auteurLivre.length()<1 || !regexAlpha(auteurLivre) || auteurLivre == null){
+                System.out.println("Error sur l'auteur du livre : ");
+            }
+        }while(!regexAlpha(auteurLivre));
+
+        do{
+            System.out.print("Quantite du livre : ");
+            quantiteLivre = sc.nextInt();
+            if(quantiteLivre<10 || quantiteLivre>50){
+                System.out.println("Error sur quantite du livre : ");
+            }
+        }while(quantiteLivre<=10  || quantiteLivre>=50);
+
+        Livre livre = new Livre(titreLivre, auteurLivre, quantiteLivre);
+        Livre.getLivres().add(livre);
+
+        System.out.println("");
+        System.out.println("[ Le nouveau livre est bien enregistrer : ]");
+        System.out.println("Nom du livre : "+ livre.getTitreLivre());
+        System.out.println("Auteur du livre : "+livre.getAuteurLivre());
+        System.out.println("Quantite du livre commander : "+livre.getQuantiteLivre());
+        System.out.println("Voici la reference ISBN : " + livre.getIsbn());
+
+        System.out.println("");
+        System.out.println("Saisir [0] pour revenir au menu");
+        int retour = sc.nextInt();
+        sc.nextLine();
+        if(retour==0){
+            menu();
+        }
+    }
+
 }
+

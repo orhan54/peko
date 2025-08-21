@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static pekopeko.afpa.Utility.RegexUtility.regexAlpha;
-import static pekopeko.afpa.Utility.RegexUtility.validate;
-import static pekopeko.afpa.view.viewBibliotheque.menu;
-
 public class Client extends Personne {
 
     static Scanner sc = new Scanner(System.in);
@@ -50,8 +46,6 @@ public class Client extends Personne {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy 'à' HH:mm");
         return dateInscription.format(formatter);
     }
-
-
 
     @Override
     public String toString() {

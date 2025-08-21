@@ -18,6 +18,7 @@ package pekopeko.afpa.controller;
 
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
+import pekopeko.afpa.model.Pret;
 
 import java.time.LocalDateTime;
 
@@ -52,6 +53,10 @@ public class Main {
             Livre.getLivres().add(l1);
             Livre l2 = new Livre("Le bruit et la fureur", "William Faulkner", 30);
             Livre.getLivres().add(l2);
+            Pret p1 = new Pret("L'étranger", "Doe", LocalDateTime.now());
+            Pret.getPrets().add(p1);
+            Pret p2 = new Pret("Le bruit et la fureur", "Louis", LocalDateTime.now());
+            Pret.getPrets().add(p2);
         }catch (Exception e){
             System.out.println("Erreur au lancement de l'initialisation " + e.getMessage());
         }

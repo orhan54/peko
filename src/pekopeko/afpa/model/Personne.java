@@ -2,8 +2,7 @@ package pekopeko.afpa.model;
 
 public class Personne {
     //attribut de la classe personne
-    private String nom;
-    private String prenom;
+    private String nom, prenom;
 
     //constructeur de peronne avec  2 param nom et prenom
     public Personne(String nom, String prenom) {

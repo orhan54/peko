@@ -49,7 +49,7 @@ public class viewBibliotheque {
                     createLivre();
                     break;
                 case 3:
-                    Pret.pretLivre();
+                    pretLivre();
                     break;
                 case 4:
                     afficherClient();
@@ -58,7 +58,7 @@ public class viewBibliotheque {
                     afficherLivre();
                     break;
                 case 6:
-                    Pret.afficherPret();
+                    afficherPret();
                     break;
                 case 0:
                     System.out.println("Vous avez quitter l'application : ");
@@ -79,6 +79,7 @@ public class viewBibliotheque {
         } else {
             for (Livre livre : Livre.getLivres()) {
                 System.out.println("");
+                System.out.println("==================================================");
                 System.out.println("- Titre du livre : " + livre.getTitreLivre());
                 System.out.println("- Auteur du livre : " + livre.getAuteurLivre());
                 System.out.println("- Quantité du livre : " + livre.getQuantiteLivre());
@@ -101,6 +102,7 @@ public class viewBibliotheque {
         String auteurLivre;
         int quantiteLivre;
 
+        sc.nextLine();
         do{
             System.out.print("Nom du livre : ");
             titreLivre = sc.nextLine().toUpperCase();
@@ -207,6 +209,56 @@ public class viewBibliotheque {
             }
             for (Client client : Client.getClients()) {
                 System.out.println(client);
+            }
+        }catch(Exception e){
+            System.err.println("Erreur : "+e.getMessage());
+        }
+        System.out.println(" ");
+        System.out.println("Saisir [0] pour revenir au menu : ");
+        int revenir = sc.nextInt();
+        if (revenir == 0) {
+            menu();
+        }
+    }
+
+    //afiicher les prets et si le livre est disponible
+    private static void pretLivre() {
+        LocalDateTime datePret;
+        System.out.println("Enregistrer votre livre pour le pret : [0] pour revenir au menu : ");
+        System.out.println("");
+        sc.nextLine();
+        System.out.print("Saisir le titre du livre : ");
+        String titreLivre = sc.nextLine();
+        System.out.print("Saisir le nom du client : ");
+        String nomClient = sc.nextLine();
+        System.out.print("");
+        datePret = LocalDateTime.now();
+
+        Pret pret = new Pret(titreLivre,nomClient , datePret);
+        Pret.getPrets().add(pret);
+        System.out.println("");
+        System.out.print("L'abonné(e) au nom de " + nomClient + " a reserver le livre " +  titreLivre + " le " + pret.getDatePretFormatee() + " : ");
+        System.out.println("");
+
+        System.out.print("Saisir 0 pour revenir au menu : ");
+        int revenir = sc.nextInt();
+        if (revenir == 0) {
+            menu();
+        }
+    }
+
+    private static void afficherPret() {
+        try{
+            System.out.println("voici la liste des prets : ");
+            if (Pret.getPrets().isEmpty()) {
+                System.out.println("        La liste des prets est vide !!   =(      ");
+                System.out.println("");
+            }
+            for (Pret pret : Pret.getPrets()) {
+                System.out.println("==========================================================");
+                System.out.println("- Le titre du livre : " + pret.getTitreLivrePret());
+                System.out.println("- Nom de l'abonné(e) : " + pret.getNomLivrePret());
+                System.out.println("- Réserver le livre : " + pret.getDatePretFormatee());
             }
         }catch(Exception e){
             System.err.println("Erreur : "+e.getMessage());

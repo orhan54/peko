@@ -3,17 +3,12 @@ package pekopeko.afpa.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
-import static pekopeko.afpa.Utility.RegexUtility.*;
-import static pekopeko.afpa.model.Client.sc;
-import static pekopeko.afpa.view.viewBibliotheque.menu;
+import static pekopeko.afpa.Utility.RegexUtility.regexAlpha;
 
 public class Livre {
     //attributs du Livre
-    private String isbn;
-    private String titreLivre;
-    private String auteurLivre;
+    private String isbn , titreLivre, auteurLivre;
     private int quantiteLivre;
 
     //List des livres enregistrée
@@ -45,6 +40,15 @@ public class Livre {
         return isbn.toString();
     }
 
+    private static int stockLivres() {
+        if(livres.size()==0){
+            System.out.println("Error le livre est pas en stock : ");
+        } else if (livres.size()>1) {
+            System.out.println("Le livre est en stock : ");
+        }
+        return livres.size();
+    }
+
     // Getters et Setters
     public String getIsbn() {
         return this.isbn;
@@ -67,7 +71,11 @@ public class Livre {
     }
 
     public void setAuteurLivre(String auteurLivre) {
-        this.auteurLivre = auteurLivre;
+        if(auteurLivre.length()<1 || auteurLivre == null || !regexAlpha(auteurLivre)){
+            System.out.println("Error Auteur du livre : ");
+        }else{
+            this.auteurLivre = auteurLivre;
+        }
     }
 
     public int getQuantiteLivre() {

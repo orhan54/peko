@@ -87,14 +87,20 @@ public class viewBibliotheque {
             }
         }
         System.out.println(" ");
-        System.out.println("Saisir [0] pour revenir au menu ou [1] pour modifier :  : ");
+        System.out.println("Saisir [0] pour revenir au menu : [1] ajouter [2] modifier et [3] supprimer");
         int revenir = sc.nextInt();
         switch(revenir){
             case 0:
                 menu();
                 break;
             case 1:
+                createLivre();
+                break;
+            case 2:
                 updateLivre();
+                break;
+            case 3:
+                deleteLivre();
                 break;
         }
 
@@ -110,6 +116,8 @@ public class viewBibliotheque {
 
         sc.nextLine();
         do{
+            System.out.println("");
+            System.out.println("Vous allez ajouter un nouveau livre : ");
             System.out.print("Nom du livre : ");
             titreLivre = sc.nextLine().toUpperCase();
             if(titreLivre.length()<1 || !regexAlpha(titreLivre) || titreLivre == null){
@@ -144,13 +152,13 @@ public class viewBibliotheque {
         System.out.println("Voici la reference ISBN : " + livre.getIsbn());
 
         System.out.println("");
-        System.out.println("Saisir [0] pour revenir au menu : ");
+        System.out.println("Saisir [0] pour revenir au menu et [1] pour afficher la liste des livres :  ");
         int retour = sc.nextInt();
         sc.nextLine();
         if(retour==0){
             menu();
         }else if(retour==1){
-            updateLivre();
+            afficherLivre();
         }
     }
 
@@ -160,6 +168,7 @@ public class viewBibliotheque {
         int j = sc.nextInt();
         sc.nextLine();
 
+        //parcourir tableau de Livre pour retrouver l'indice
         Livre livre = Livre.getLivres().get(j-1);
 
         System.out.print("Modification nom du livre : ");
@@ -178,11 +187,51 @@ public class viewBibliotheque {
         System.out.println("");
         System.out.println("[ Votre livre est bien modifié ! ]");
 
-        System.out.print("Saisir [0] pour revenir au menu : ");
+        System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
         int retour = sc.nextInt();
         sc.nextLine();
-        if (retour == 0) {
-            menu();
+        switch (retour){
+            case 1:
+                afficherLivre();
+                break;
+            case 0:
+                menu();
+                break;
+        }
+    }
+
+    //methde pour delete un livre
+    public static void deleteLivre() {
+        System.out.print("Saisir le numero du livre a supprimer : ");
+        int j = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Etes vous sur de supprimer le livre : [oui/non]");
+        String deleteLivre = sc.nextLine();
+        if(deleteLivre.equals("oui")){
+            //parcourir le tableau pour supprimer l'indice recharcher
+            Livre livre = Livre.getLivres().get(j-1);
+
+            livre.getLivres().remove(j-1);
+            System.out.println(" ");
+            System.out.println("Votre livre n°"+ j + " est bien supprimer de la liste : ");
+            System.out.print(" ");
+            System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+            System.out.println(" ");
+        }else if(deleteLivre.equals("non")){
+            System.out.print("");
+            System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+        }
+
+        int retour = sc.nextInt();
+        sc.nextLine();
+        switch (retour){
+            case 1:
+                afficherLivre();
+                break;
+            case 0:
+                menu();
+                break;
         }
     }
 

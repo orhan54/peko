@@ -62,24 +62,24 @@ public class viewBibliotheque {
                     break;
                 case 0:
                     System.out.println("Vous avez quitter l'application : ");
+                    System.exit(0);
                     break;
-
             }
         }
-
     }
 
     //afficher les livres
     private static void afficherLivre() {
-
+        int i = 1;// indice pour le numero de livre et qui va me modifier le livre
         System.out.println("Voici la liste des livres : ");
         if(Livre.getLivres().isEmpty()){
             System.out.println("La liste des livres est vide : ");
             System.out.println(" ");
         } else {
+
             for (Livre livre : Livre.getLivres()) {
                 System.out.println("");
-                System.out.println("==================================================");
+                System.out.println("Livre n°" + i++ + ":");
                 System.out.println("- Titre du livre : " + livre.getTitreLivre());
                 System.out.println("- Auteur du livre : " + livre.getAuteurLivre());
                 System.out.println("- Quantité du livre : " + livre.getQuantiteLivre());
@@ -87,11 +87,17 @@ public class viewBibliotheque {
             }
         }
         System.out.println(" ");
-        System.out.println("Saisir [0] pour revenir au menu : ");
+        System.out.println("Saisir [0] pour revenir au menu ou [1] pour modifier :  : ");
         int revenir = sc.nextInt();
-        if (revenir == 0) {
-            menu();
+        switch(revenir){
+            case 0:
+                menu();
+                break;
+            case 1:
+                updateLivre();
+                break;
         }
+
     }
 
     //creation d'un livre
@@ -138,13 +144,48 @@ public class viewBibliotheque {
         System.out.println("Voici la reference ISBN : " + livre.getIsbn());
 
         System.out.println("");
-        System.out.println("Saisir [0] pour revenir au menu");
+        System.out.println("Saisir [0] pour revenir au menu : ");
         int retour = sc.nextInt();
         sc.nextLine();
         if(retour==0){
             menu();
+        }else if(retour==1){
+            updateLivre();
         }
     }
+
+    //modification du livre
+    private static void updateLivre() {
+        System.out.print("Saisir le numero du livre a modifier : ");
+        int j = sc.nextInt();
+        sc.nextLine();
+
+        Livre livre = Livre.getLivres().get(j-1);
+
+        System.out.print("Modification nom du livre : ");
+        String newTitreLivre = sc.nextLine();
+
+        System.out.print("Modification auteur du livre : ");
+        String newAuteurLivre = sc.nextLine();
+
+        System.out.print("Modification quantite du livre : ");
+        int newQuantiteLivre = sc.nextInt();
+
+        livre.setTitreLivre(newTitreLivre);
+        livre.setAuteurLivre(newAuteurLivre);
+        livre.setQuantiteLivre(newQuantiteLivre);
+
+        System.out.println("");
+        System.out.println("[ Votre livre est bien modifié ! ]");
+
+        System.out.print("Saisir [0] pour revenir au menu : ");
+        int retour = sc.nextInt();
+        sc.nextLine();
+        if (retour == 0) {
+            menu();
+        }
+    }
+
 
     //creer un nouveau client
     public static void createClient() {
@@ -207,6 +248,7 @@ public class viewBibliotheque {
                 System.out.println("        La liste des clients est vide !!   =(      ");
                 System.out.println("");
             }
+            int i = 1;
             for (Client client : Client.getClients()) {
                 System.out.println(client);
             }

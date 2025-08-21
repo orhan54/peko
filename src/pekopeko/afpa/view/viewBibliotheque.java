@@ -70,7 +70,7 @@ public class viewBibliotheque {
 
     //afficher les livres
     private static void afficherLivre() {
-        int i = 1;// indice pour le numero de livre et qui va me modifier le livre
+        int i = 1;// indice pour le numero de livre de ma liste [ex: Livre°1]
         System.out.println("Voici la liste des livres : ");
         if(Livre.getLivres().isEmpty()){
             System.out.println("La liste des livres est vide : ");
@@ -141,15 +141,30 @@ public class viewBibliotheque {
             }
         }while(quantiteLivre<=10  || quantiteLivre>=50);
 
-        Livre livre = new Livre(titreLivre, auteurLivre, quantiteLivre);
-        Livre.getLivres().add(livre);
+        System.out.println("Confirmation pour ajouter le nouveau livre dans la liste : [oui/non]");
+        sc.nextLine();
+        String addLivre = sc.nextLine();
+        if(addLivre.equals("oui")){
+            Livre livre = new Livre(titreLivre, auteurLivre, quantiteLivre);
+            Livre.getLivres().add(livre);
 
-        System.out.println("");
-        System.out.println("[ Le nouveau livre est bien enregistrer : ]");
-        System.out.println("Nom du livre : "+ livre.getTitreLivre());
-        System.out.println("Auteur du livre : "+livre.getAuteurLivre());
-        System.out.println("Quantite du livre commander : "+livre.getQuantiteLivre());
-        System.out.println("Voici la reference ISBN : " + livre.getIsbn());
+            System.out.println("");
+            System.out.println("[ Le nouveau livre est bien enregistrer : ]");
+            System.out.println("Nom du livre : "+ livre.getTitreLivre());
+            System.out.println("Auteur du livre : "+livre.getAuteurLivre());
+            System.out.println("Quantite du livre commander : "+livre.getQuantiteLivre());
+            System.out.println("Voici la reference ISBN : " + livre.getIsbn());
+        }
+
+        if(addLivre.equals("non")){
+            System.out.println("Saisir [0] pour revenir au menu : ");
+            int revenir = sc.nextInt();
+            switch(revenir){
+                case 0:
+                    menu();
+                    break;
+            }
+        }
 
         System.out.println("");
         System.out.println("Saisir [0] pour revenir au menu et [1] pour afficher la liste des livres :  ");
@@ -180,12 +195,19 @@ public class viewBibliotheque {
         System.out.print("Modification quantite du livre : ");
         int newQuantiteLivre = sc.nextInt();
 
-        livre.setTitreLivre(newTitreLivre);
-        livre.setAuteurLivre(newAuteurLivre);
-        livre.setQuantiteLivre(newQuantiteLivre);
-
-        System.out.println("");
-        System.out.println("[ Votre livre est bien modifié ! ]");
+        System.out.println("Etes vous sur de vouloir modifier : [oui/non] ");
+        sc.nextLine();
+        String chooseUpdateLivre = sc.nextLine();
+        if(chooseUpdateLivre.equals("oui")){
+            livre.setTitreLivre(newTitreLivre);
+            livre.setAuteurLivre(newAuteurLivre);
+            livre.setQuantiteLivre(newQuantiteLivre);
+            System.out.println("");
+            System.out.println("[ Votre livre est bien modifié ! ]");
+        }
+        if(chooseUpdateLivre.equals("non")){
+            System.out.println("Votre livre est pas mis a jour : ");
+        }
 
         System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
         int retour = sc.nextInt();
@@ -272,14 +294,22 @@ public class viewBibliotheque {
             }while(!validate(email));
             dateInscription = LocalDateTime.now();
 
-            Client client = new Client(nom, prenom, email, dateInscription);
-            client.setEmail(email);
-            Client.getClients().add(client);
+            System.out.println("Etes vous sur de vouloir ajouter un nouveau client : [oui/non] ");
+            String validateAddClient = sc.nextLine();
+            if(validateAddClient.equals("oui")){
+                Client client = new Client(nom, prenom, email, dateInscription);
+                client.setEmail(email);
+                Client.getClients().add(client);
 
-            System.out.println("");
-            System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
-            System.out.println(" ");
-            System.out.println("Saisir 0 pour revenir au menu : ");
+                System.out.println("");
+                System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
+                System.out.println(" ");
+            }
+            if(validateAddClient.equals("non")){
+                System.out.println("");
+                System.out.println("Votre nouveau client a pas été ajouter : ");
+            }
+            System.out.println("Saisir 0 pour revenir au menu ou [1] afficher liste client : ");
             int saisie = sc.nextInt();
             if (saisie == 0) {
                 menu();
@@ -299,7 +329,10 @@ public class viewBibliotheque {
             }
             int i = 1;
             for (Client client : Client.getClients()) {
+                System.out.println("");
+                System.out.println("Client n°" + i);
                 System.out.println(client);
+                i++;
             }
         }catch(Exception e){
             System.err.println("Erreur : "+e.getMessage());

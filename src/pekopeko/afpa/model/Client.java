@@ -49,8 +49,9 @@ public class Client extends Personne {
 
     @Override
     public String toString() {
-        System.out.println("==================================================");
-        return super.toString() + "email : " + email + ("\n") +
-                "est inscrit : " + this.getDateCreationFormatee();
+        int i =1;
+        return super.toString() + "- Email : " + email + ("\n") +
+                "- Inscrit le : " + this.getDateCreationFormatee();
+
     }
 }

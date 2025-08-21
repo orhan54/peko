@@ -16,6 +16,11 @@ package pekopeko.afpa.controller;
 //TODO : revue de code et amélioration
 //TODO : Javadoc du projet
 
+import pekopeko.afpa.model.Client;
+import pekopeko.afpa.model.Livre;
+
+import java.time.LocalDateTime;
+
 import static pekopeko.afpa.view.viewBibliotheque.menu;
 
 public class Main {
@@ -30,10 +35,26 @@ public class Main {
 
     public void run() {
         try {
+            initialisation();
             menu();
         }catch (Exception e){
             System.out.println("Erreur au lancement de la vue accueil " + e.getMessage());
         }
     }
 
+    public void initialisation() {
+        try{
+            Client c1 = new Client("Doe", "John", "johndoe@live.fr", LocalDateTime.now());
+            Client.getClients().add(c1);
+            Client c2 = new Client("Jean", "Louis", "jeanlouis@gmail.com", LocalDateTime.now());
+            Client.getClients().add(c2);
+            Livre l1 = new Livre("L'étranger", "Albert Camus", 20);
+            Livre.getLivres().add(l1);
+            Livre l2 = new Livre("Le bruit et la fureur", "William Faulkner", 30);
+            Livre.getLivres().add(l2);
+        }catch (Exception e){
+            System.out.println("Erreur au lancement de l'initialisation " + e.getMessage());
+        }
+
+    }
 }

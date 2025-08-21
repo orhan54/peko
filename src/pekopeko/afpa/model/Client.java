@@ -15,12 +15,11 @@ public class Client extends Personne {
     static Scanner sc = new Scanner(System.in);
 
     //attibuts pour les Clients
-    private static String email;
-    private static LocalDateTime dateInscription;
+    private String email, nom, prenom;
+    private LocalDateTime dateInscription;
 
     //List des Clients enregistrer
     private static List<Client> clients = new ArrayList<Client>();
-    private static String nom, prenom;
 
     //constructeur avec le super qui extends de Personne
     public Client(String nom, String prenom, String email, LocalDateTime dateInscription) {
@@ -32,27 +31,6 @@ public class Client extends Personne {
     //afficher la List Client
     public static List<Client> getClients() {
         return clients;
-    }
-
-    public static void afficherClient() {
-        try{
-            System.out.println("voici la liste des clients : ");
-            if (clients.isEmpty()) {
-                System.out.println("        La liste des clients est vide !!   =(      ");
-                System.out.println("");
-            }
-            for (Client client : clients) {
-                System.out.println(client);
-            }
-        }catch(Exception e){
-            System.err.println("Erreur : "+e.getMessage());
-        }
-        System.out.println(" ");
-        System.out.println("Saisir [0] pour revenir au menu : ");
-        int revenir = sc.nextInt();
-        if (revenir == 0) {
-            menu();
-        }
     }
 
     //Getters et Setters pour acceder au attributs private
@@ -73,54 +51,7 @@ public class Client extends Personne {
         return dateInscription.format(formatter);
     }
 
-    public static void createClient() {
-        try{
-            System.out.println("Créer un client : ");
-            sc.nextLine();
 
-            //verification du nom avec le regexAlpha
-            do {
-                System.out.print("Saisir le nom : ");
-                nom = sc.nextLine().toUpperCase();
-                if(!regexAlpha(nom) || nom == null) {
-                    System.out.println("Erreur : Le nom est incorrecte");
-                }
-            }while (!regexAlpha(nom));
-
-            //verification du prenom avec le regexAlpha
-            do {
-                System.out.print("Saisir le prenom : ");
-                prenom = sc.nextLine().toUpperCase();
-                if(!regexAlpha(prenom) || prenom == null) {
-                    System.out.println("Erreur : Le prenom est incorrecte");
-                }
-            }while (!regexAlpha(prenom));
-
-            do{
-                System.out.print("Email : ");
-                email = sc.nextLine();
-                if(!validate(email)){
-                    System.out.println("Error saisir un email valide(ex: test@test.fr)");
-                }
-            }while(!validate(email));
-            dateInscription = LocalDateTime.now();
-
-            Client client = new Client(nom, prenom, email, dateInscription);
-            client.setEmail(email);
-            Client.clients.add(client);
-
-            System.out.println("");
-            System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
-            System.out.println(" ");
-            System.out.println("Saisir 0 pour revenir au menu : ");
-            int saisie = sc.nextInt();
-            if (saisie == 0) {
-                menu();
-            }
-        }catch(Exception e){
-            System.err.println("Erreur dans l'inscription du Client");
-        }
-    }
 
     @Override
     public String toString() {

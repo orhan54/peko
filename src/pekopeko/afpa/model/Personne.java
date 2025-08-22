@@ -31,9 +31,9 @@ public class Personne {
     public String toString() {
         StringBuilder personne = new StringBuilder();
         personne.append("- Nom : ");
-        personne.append(this.nom).append("\n");
+        personne.append(this.nom.toUpperCase()).append("\n");
         personne.append("- Prenom :");
-        personne.append(this.prenom).append("\n");
+        personne.append(this.prenom.toUpperCase()).append("\n");
 
         return personne.toString();
     }

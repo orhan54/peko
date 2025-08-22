@@ -80,8 +80,8 @@ public class viewBibliotheque {
             for (Livre livre : Livre.getLivres()) {
                 System.out.println("");
                 System.out.println("Livre n°" + i++ + ":");
-                System.out.println("- Titre du livre : " + livre.getTitreLivre());
-                System.out.println("- Auteur du livre : " + livre.getAuteurLivre());
+                System.out.println("- Titre du livre : " + livre.getTitreLivre().toUpperCase());
+                System.out.println("- Auteur du livre : " + livre.getAuteurLivre().toUpperCase());
                 System.out.println("- Quantité du livre : " + livre.getQuantiteLivre());
                 System.out.println("- ISBN du livre : " + livre.getIsbn());
             }
@@ -187,10 +187,10 @@ public class viewBibliotheque {
         Livre livre = Livre.getLivres().get(j-1);
 
         System.out.print("Modification nom du livre : ");
-        String newTitreLivre = sc.nextLine();
+        String newTitreLivre = sc.nextLine().toUpperCase();
 
         System.out.print("Modification auteur du livre : ");
-        String newAuteurLivre = sc.nextLine();
+        String newAuteurLivre = sc.nextLine().toLowerCase();
 
         System.out.print("Modification quantite du livre : ");
         int newQuantiteLivre = sc.nextInt();
@@ -256,7 +256,6 @@ public class viewBibliotheque {
                 break;
         }
     }
-
 
     //creer un nouveau client
     public static void createClient() {
@@ -374,12 +373,12 @@ public class viewBibliotheque {
 
         System.out.println("Le nom du client a modifier est " + client.getNom() + " !!");
         System.out.print("Saisir le nouveau nom du client : ");
-        String newNom = sc.nextLine();
+        String newNom = sc.nextLine().toUpperCase();
         System.out.println("");
 
         System.out.println("Le prenom du client a modifier est " + client.getPrenom() + " !!");
         System.out.print("Saisir le nouveau prenom du client : ");
-        String newPrenom = sc.nextLine();
+        String newPrenom = sc.nextLine().toUpperCase();
         System.out.println("");
 
         System.out.println("Le email du client a modifier est " + client.getEmail() + " !!");
@@ -454,7 +453,7 @@ public class viewBibliotheque {
     //afiicher les prets et si le livre est disponible
     private static void pretLivre() {
         LocalDateTime datePret;
-        System.out.println("Enregistrer votre livre pour le pret : [0] pour revenir au menu : ");
+        System.out.println("Enregistrer votre livre pour le pret :");
         System.out.println("");
         sc.nextLine();
         System.out.print("Saisir le titre du livre : ");

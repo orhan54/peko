@@ -453,8 +453,25 @@ public class viewBibliotheque {
     //afiicher les prets et si le livre est disponible
     private static void pretLivre() {
         LocalDateTime datePret;
-        System.out.println("Enregistrer votre livre pour le pret :");
+        int i = 1;// indice pour le numero de livre de ma liste [ex: Livre°1]
         System.out.println("");
+        System.out.println("Voici la liste des livres : ");
+        if(Livre.getLivres().isEmpty()){
+            System.out.println("La liste des livres est vide : ");
+            System.out.println(" ");
+        } else {
+
+            for (Livre livre : Livre.getLivres()) {
+                System.out.println("");
+                System.out.println("Livre n°" + i++ + ":");
+                System.out.println("- Titre du livre : " + livre.getTitreLivre().toUpperCase());
+                System.out.println("- Auteur du livre : " + livre.getAuteurLivre().toUpperCase());
+                System.out.println("- Quantité du livre : " + livre.getQuantiteLivre());
+                System.out.println("- ISBN du livre : " + livre.getIsbn());
+            }
+        }
+        System.out.println("");
+        System.out.println("Enregistrer votre livre pour le pret :");
         sc.nextLine();
         System.out.print("Saisir le titre du livre : ");
         String titreLivre = sc.nextLine();

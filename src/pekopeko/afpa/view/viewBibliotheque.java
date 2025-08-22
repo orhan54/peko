@@ -261,7 +261,7 @@ public class viewBibliotheque {
     //creer un nouveau client
     public static void createClient() {
         String email, nom, prenom;
-        LocalDateTime dateInscription;
+        LocalDateTime dateInscription, dateUpdate = null;
 
         try{
             System.out.println("Créer un client : ");
@@ -314,6 +314,9 @@ public class viewBibliotheque {
             if (saisie == 0) {
                 menu();
             }
+            if (saisie == 1) {
+                afficherClient();
+            }
         }catch(Exception e){
             System.err.println("Erreur dans l'inscription du Client");
         }
@@ -338,11 +341,114 @@ public class viewBibliotheque {
             System.err.println("Erreur : "+e.getMessage());
         }
         System.out.println(" ");
-        System.out.println("Saisir [0] pour revenir au menu : ");
+        System.out.println("Saisir [0] pour revenir au menu : [1] ajouter [2] modifier et [3] supprimer");
         int revenir = sc.nextInt();
-        if (revenir == 0) {
-            menu();
+
+        switch (revenir){
+            case 0:
+                menu();
+                break;
+            case 1:
+                createClient();
+                break;
+            case 2:
+                updateClient();
+                break;
+            case 3:
+                deleteClient();
+                break;
         }
+
+    }
+
+    //mettre a jour un client
+    private static void updateClient() {
+        System.out.println("Saisir le numero client a modifier : ");
+        int j = sc.nextInt();
+        sc.nextLine();
+
+        LocalDateTime.now();
+
+        //parcourir le tableau de client pour trouver l'indice
+        Client client = Client.getClients().get(j-1);
+
+        System.out.println("Le nom du client a modifier est " + client.getNom() + " !!");
+        System.out.print("Saisir le nouveau nom du client : ");
+        String newNom = sc.nextLine();
+        System.out.println("");
+
+        System.out.println("Le prenom du client a modifier est " + client.getPrenom() + " !!");
+        System.out.print("Saisir le nouveau prenom du client : ");
+        String newPrenom = sc.nextLine();
+        System.out.println("");
+
+        System.out.println("Le email du client a modifier est " + client.getEmail() + " !!");
+        System.out.print("Saisir le nouveau email du client : ");
+        String newEmail = sc.nextLine().toLowerCase();
+        System.out.println("");
+
+        System.out.println("Etes vous sur de vouloir modifier : [oui/non]");
+        //sc.nextLine();
+        String chooseUpdateClient = sc.nextLine();
+        if(chooseUpdateClient.equals("oui")){
+            client.setNom(newNom);
+            client.setPrenom(newPrenom);
+            client.setEmail(newEmail);
+            System.out.println("");
+            System.out.println("[ Votre client est bien modifier : ]");
+        }
+
+        if(chooseUpdateClient.equals("non")){
+            System.out.println("Votre client est pas modifier : ");
+        }
+
+        System.out.println("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+        int revenir = sc.nextInt();
+        switch (revenir){
+            case 0:
+                menu();
+                break;
+            case 1:
+                afficherClient();
+                break;
+        }
+
+    }
+
+    //supprimer un client
+    private static void deleteClient() {
+        System.out.println("Saisir le numero client a supprimer : ");
+        int j = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Etes vous sur de supprimer le client : [oui/non]");
+        String chooseDeleteClient = sc.nextLine();
+        if(chooseDeleteClient.equals("oui")){
+            //parcourir le tableau pour supprimer le client
+            Client client = Client.getClients().get(j-1);
+
+            client.getClients().remove(j-1);
+            System.out.println("");
+            System.out.println("[ Votre client " + client.getNom() + " " + client.getPrenom() + " est bien supprimer de la liste ! ]");
+            System.out.println("");
+            System.out.println("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+            System.out.println("");
+        } else if (chooseDeleteClient.equals("non")) {
+            System.out.println("");
+            System.out.println("Votre client n'est pas supprimer de la liste ! : ");
+            System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+        }
+
+        int revenir = sc.nextInt();
+        switch (revenir){
+            case 0:
+                menu();
+                break;
+            case 1:
+                afficherClient();
+                break;
+        }
+
     }
 
     //afiicher les prets et si le livre est disponible

@@ -20,9 +20,7 @@ import pekopeko.afpa.exception.SaisieException;
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
 import pekopeko.afpa.model.Pret;
-
 import java.time.LocalDateTime;
-
 import static pekopeko.afpa.view.viewBibliotheque.menu;
 
 public class Main {
@@ -58,6 +56,10 @@ public class Main {
             Pret.getPrets().add(p1);
             Pret p2 = new Pret("Le bruit et la fureur", "Louis", LocalDateTime.now());
             Pret.getPrets().add(p2);
+//            Staff s1 = new Staff("Jean", "Neymar", 1);
+//            Staff.getStaffs().add(s1);
+//            Staff s2 = new Staff("Jean", "Peuplus", 2);
+//            Staff.getStaffs().add(s2);
         }catch (SaisieException e){
             System.out.println("Erreur au lancement de l'initialisation " + e.getMessage());
         }

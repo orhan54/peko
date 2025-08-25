@@ -14,7 +14,7 @@ public class RegexUtility {
     }
 
     public static boolean PositiveIntStrict(String input) {
-        return input != null && input.matches("[0-6]\\d*");
+        return input != null && input.matches("[0-7]\\d*");
     }
 
     public static boolean regexAlpha(String input) {

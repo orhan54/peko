@@ -27,8 +27,39 @@ public class LivreTest {
         });
     }
 
+    @Test
+    void getLivres() {
+    }
 
+    @Test
+    void getIsbn() {
+    }
 
+    @Test
+    void setIsbn() {
+    }
 
+    @Test
+    void getTitreLivre() {
+    }
 
+    @Test
+    void setTitreLivre() {
+    }
+
+    @Test
+    void getAuteurLivre() {
+    }
+
+    @Test
+    void setAuteurLivre() {
+    }
+
+    @Test
+    void getQuantiteLivre() {
+    }
+
+    @Test
+    void setQuantiteLivre() {
+    }
 }

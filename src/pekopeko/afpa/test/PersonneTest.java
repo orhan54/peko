@@ -1,22 +1,24 @@
 package pekopeko.afpa.test;
 
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonneTest {
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getNom() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setNom() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void getPrenom() {
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void setPrenom() {
     }
 }

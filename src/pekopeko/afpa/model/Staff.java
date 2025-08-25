@@ -5,16 +5,19 @@ import pekopeko.afpa.exception.SaisieException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pekopeko.afpa.Utility.RegexUtility.PositifInt;
+
 public class Staff extends Personne {
     //attribut du Staff
-    private int  id;
+    private static int nextId = 1;
+    private int id;
 
     private static List<Staff> staffs = new ArrayList<Staff>();
 
     //contructeur pour le Staff qui extends de Personne
     public Staff(String nom, String prenom, int id) throws SaisieException {
         super(nom, prenom);
-        this.id = id;
+        this.setId(id);
     }
 
     public static List<Staff> getStaffs() {
@@ -26,7 +29,16 @@ public class Staff extends Personne {
         return this.id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int id) throws SaisieException {
+        if(!PositifInt(String.valueOf(id))){
+            throw new SaisieException("Error sur id Staff");
+        }else{
+            this.id = nextId++;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "- ID staff : " +  id;
     }
 }

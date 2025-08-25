@@ -5,6 +5,7 @@ import pekopeko.afpa.exception.SaisieException;
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
 import pekopeko.afpa.model.Pret;
+import pekopeko.afpa.model.Staff;
 
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -26,6 +27,7 @@ public class viewBibliotheque {
             System.out.println("4 - Afficher les abonnées : ");
             System.out.println("5 - Afficher la liste des livres : ");
             System.out.println("6 - Afficher la liste des prets : ");
+            System.out.println("7 - Afficher la listes des staff : ");
             System.out.println("0 - Quitter : ");
         }catch(Exception e){
             System.out.println("Erreur au lancement du choix menu " + e.getMessage());
@@ -59,6 +61,9 @@ public class viewBibliotheque {
                 break;
             case 6:
                 afficherPret();
+                break;
+            case 7:
+                afficherStaff();
                 break;
             case 0:
                 System.out.println("Vous avez quitter l'application : ");
@@ -263,66 +268,194 @@ public class viewBibliotheque {
     }
 
     //creer un nouveau client
-    public static void createClient() {
+    public static void createClient() throws SaisieException {
         String email, nom, prenom;
         LocalDateTime dateInscription;
+        System.out.print("Vous voulez enregister un membre staff : [oui/non] ");
+        sc.nextLine();
+        String choixInscription = sc.nextLine();
+        if(choixInscription.equals("oui")){
+            createStaff();
+        }else if(choixInscription.equals("non")){
+            try{
+                System.out.println("Créer un client : ");
+                sc.nextLine();
 
-        try{
-            System.out.println("Créer un client : ");
-            sc.nextLine();
+                //verification du nom avec le regexAlpha
+                do {
+                    System.out.print("Saisir le nom : ");
+                    nom = sc.nextLine().toUpperCase();
+                    if(!regexAlpha(nom)) {
+                        System.out.println("Erreur : Le nom est incorrecte");
+                    }
+                }while (!regexAlpha(nom));
 
-            //verification du nom avec le regexAlpha
-            do {
-                System.out.print("Saisir le nom : ");
-                nom = sc.nextLine().toUpperCase();
-                if(!regexAlpha(nom)) {
-                    System.out.println("Erreur : Le nom est incorrecte");
+                //verification du prenom avec le regexAlpha
+                do {
+                    System.out.print("Saisir le prenom : ");
+                    prenom = sc.nextLine().toUpperCase();
+                    if(!regexAlpha(prenom)) {
+                        System.out.println("Erreur : Le prenom est incorrecte");
+                    }
+                }while (!regexAlpha(prenom));
+
+                do{
+                    System.out.print("Email : ");
+                    email = sc.nextLine();
+                    if(!validate(email)){
+                        System.out.println("Error saisir un email valide(ex: test@test.fr)");
+                    }
+                }while(!validate(email));
+                dateInscription = LocalDateTime.now();
+
+                System.out.println("Etes vous sur de vouloir ajouter un nouveau client : [oui/non] ");
+                String validateAddClient = sc.nextLine();
+                if(validateAddClient.equals("oui")){
+                    Client client = new Client(nom, prenom, email, dateInscription);
+                    client.setEmail(email);
+                    Client.getClients().add(client);
+
+                    System.out.println();
+                    System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
+                    System.out.println(" ");
                 }
-            }while (!regexAlpha(nom));
-
-            //verification du prenom avec le regexAlpha
-            do {
-                System.out.print("Saisir le prenom : ");
-                prenom = sc.nextLine().toUpperCase();
-                if(!regexAlpha(prenom)) {
-                    System.out.println("Erreur : Le prenom est incorrecte");
+                if(validateAddClient.equals("non")){
+                    System.out.println();
+                    System.out.println("Votre nouveau client a pas été ajouter : ");
                 }
-            }while (!regexAlpha(prenom));
-
-            do{
-                System.out.print("Email : ");
-                email = sc.nextLine();
-                if(!validate(email)){
-                    System.out.println("Error saisir un email valide(ex: test@test.fr)");
+                System.out.println("Saisir 0 pour revenir au menu ou [1] afficher liste client : ");
+                int saisie = sc.nextInt();
+                if (saisie == 0) {
+                    menu();
                 }
-            }while(!validate(email));
-            dateInscription = LocalDateTime.now();
-
-            System.out.println("Etes vous sur de vouloir ajouter un nouveau client : [oui/non] ");
-            String validateAddClient = sc.nextLine();
-            if(validateAddClient.equals("oui")){
-                Client client = new Client(nom, prenom, email, dateInscription);
-                client.setEmail(email);
-                Client.getClients().add(client);
-
-                System.out.println();
-                System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
-                System.out.println(" ");
+                if (saisie == 1) {
+                    afficherClient();
+                }
+            }catch(Exception e){
+                System.err.println("Erreur dans l'inscription du Client");
             }
-            if(validateAddClient.equals("non")){
-                System.out.println();
-                System.out.println("Votre nouveau client a pas été ajouter : ");
-            }
-            System.out.println("Saisir 0 pour revenir au menu ou [1] afficher liste client : ");
-            int saisie = sc.nextInt();
-            if (saisie == 0) {
+        }
+    }
+
+    // creation membre staff
+    private static void createStaff() throws SaisieException {
+        int id = 1;
+        sc.nextLine();
+        System.out.println("Saisir le nom du membre staff : ");
+        String nomMembre = sc.nextLine();
+        System.out.println("Saisir le prenom du membre : ");
+        String prenomMembre = sc.nextLine();
+
+        System.out.println("Etes vous sur de creer un nouveau staff : [oui/non] ");
+        String creerMembre = sc.nextLine();
+        if(creerMembre.equals("oui")){
+            Staff staff = new Staff(nomMembre, prenomMembre, id);
+            Staff.getStaffs().add(staff);
+            System.out.println();
+            System.out.println("Votre nouveau staff est : " + nomMembre + " " + prenomMembre);
+        }else if(creerMembre.equals("non")){
+            System.out.println("Votre nouveau membre staff est pas creer : ");
+        }
+
+        System.out.println("Saisir [0] pour le menu : [1] afficher staff [2] modiffier staff et [3] supprimer ");
+        int choix = sc.nextInt();
+        switch (choix){
+            case 0:
                 menu();
+                break;
+            case 1:
+                afficherStaff();
+                break;
+            case 2:
+                updateStaff();
+                break;
+            case 3:
+                deleteStaff();
+                break;
+        }
+    }
+
+    private static void updateStaff() throws SaisieException {
+        System.out.println("Saisir le numero staff a modifier : ");
+        int j = sc.nextInt();
+        sc.nextLine();
+
+        LocalDateTime.now();
+
+        //parcourir le tableau de staff pour trouver l'indice
+        Staff staff = Staff.getStaffs().get(j-1);
+
+        System.out.println("Le nom du staff a modifier est " + staff.getNom() + " !!");
+        System.out.print("Saisir le nouveau nom du staff : ");
+        String newNomStaff = sc.nextLine().toUpperCase();
+        System.out.println();
+
+        System.out.println("Le prenom du client a modifier est " + staff.getPrenom() + " !!");
+        System.out.print("Saisir le nouveau prenom du staff : ");
+        String newPrenomStaff = sc.nextLine().toUpperCase();
+        System.out.println();
+
+        System.out.println("Etes vous sur de vouloir modifier : [oui/non]");
+        //sc.nextLine();
+        String chooseUpdateClient = sc.nextLine();
+        if(chooseUpdateClient.equals("oui")){
+            staff.setNom(newNomStaff);
+            staff.setPrenom(newPrenomStaff);
+            System.out.println();
+            System.out.println("[ Votre staff est bien modifier : ]");
+        }
+
+        if(chooseUpdateClient.equals("non")){
+            System.out.println("Votre staff est pas modifier : ");
+        }
+
+        System.out.println("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+        int revenir = sc.nextInt();
+        switch (revenir){
+            case 0:
+                menu();
+                break;
+            case 1:
+                afficherStaff();
+                break;
+        }
+    }
+
+    private static void afficherStaff() throws SaisieException {
+        try{
+            if(Staff.getStaffs().isEmpty()){
+                System.out.println("La liste des staff est vide : ");
+                System.out.println(" ");
+            } else {
+                System.out.println("Voici la liste des membres staff : ");
+                System.out.println();
+                int j = 1;
+                for (Staff staff : Staff.getStaffs()) {
+                    System.out.println("Staff n°" + j);
+                    System.out.println(staff);
+                    j++;
+                    System.out.println();
+                }
             }
-            if (saisie == 1) {
-                afficherClient();
-            }
+
         }catch(Exception e){
-            System.err.println("Erreur dans l'inscription du Client");
+            System.err.println("Erreur dans l'affichage des membres staff : ");
+        }
+        System.out.println("Saisir [0] pour le menu : [1] ajouter [2] modifier [3] supprimer staff ");
+        int choix = sc.nextInt();
+        switch (choix){
+            case 0:
+                menu();
+                break;
+            case 1:
+                createStaff();
+                break;
+            case 2:
+                updateStaff();
+                break;
+            case 3:
+                deleteStaff();
+                break;
         }
     }
 
@@ -421,25 +554,65 @@ public class viewBibliotheque {
 
     //supprimer un client
     private static void deleteClient() throws SaisieException {
-        System.out.println("Saisir le numero client a supprimer : ");
+        System.out.println("Voulez vous supprimer un membre staff : [oui/non] ");
+        String choix = sc.nextLine();
+        if (choix.equals("oui")){
+            deleteStaff();
+        }else{
+            System.out.println("Saisir le numero client a supprimer : ");
+            int j = sc.nextInt();
+            sc.nextLine();
+
+            System.out.println("Etes vous sur de supprimer le client : [oui/non]");
+            String chooseDeleteClient = sc.nextLine();
+            if(chooseDeleteClient.equals("oui")){
+                //parcourir le tableau pour supprimer le client
+                Client client = Client.getClients().get(j-1);
+
+                Client.getClients().remove(j-1);
+                System.out.println();
+                System.out.println("[ Votre client " + client.getNom() + " " + client.getPrenom() + " est bien supprimer de la liste ! ]");
+                System.out.println();
+                System.out.println("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+                System.out.println();
+            } else if (chooseDeleteClient.equals("non")) {
+                System.out.println();
+                System.out.println("Votre client n'est pas supprimer de la liste ! : ");
+                System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
+            }
+
+            int revenir = sc.nextInt();
+            switch (revenir){
+                case 0:
+                    menu();
+                    break;
+                case 1:
+                    afficherClient();
+                    break;
+            }
+        }
+    }
+
+    private static void deleteStaff() throws SaisieException {
+        System.out.println("Saisir le numero du staff a supprimer : ");
         int j = sc.nextInt();
         sc.nextLine();
 
-        System.out.println("Etes vous sur de supprimer le client : [oui/non]");
+        System.out.println("Etes vous sur de supprimer le staff : [oui/non]");
         String chooseDeleteClient = sc.nextLine();
         if(chooseDeleteClient.equals("oui")){
             //parcourir le tableau pour supprimer le client
-            Client client = Client.getClients().get(j-1);
+            Staff staff = Staff.getStaffs().get(j-1);
 
-            Client.getClients().remove(j-1);
+            Staff.getStaffs().remove(j-1);
             System.out.println();
-            System.out.println("[ Votre client " + client.getNom() + " " + client.getPrenom() + " est bien supprimer de la liste ! ]");
+            System.out.println("[ Votre client " + staff.getNom() + " " + staff.getPrenom() + " est bien supprimer de la liste ! ]");
             System.out.println();
             System.out.println("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
             System.out.println();
         } else if (chooseDeleteClient.equals("non")) {
             System.out.println();
-            System.out.println("Votre client n'est pas supprimer de la liste ! : ");
+            System.out.println("Votre membre staff n'est pas supprimer de la liste ! : ");
             System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
         }
 
@@ -449,10 +622,9 @@ public class viewBibliotheque {
                 menu();
                 break;
             case 1:
-                afficherClient();
+                afficherStaff();
                 break;
         }
-
     }
 
     //afiicher les prets et si le livre est disponible

@@ -1,10 +1,14 @@
 package pekopeko.afpa.model;
 
+import pekopeko.afpa.exception.SaisieException;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static pekopeko.afpa.Utility.RegexUtility.validate;
 
 public class Client extends Personne {
 
@@ -18,9 +22,9 @@ public class Client extends Personne {
     private static List<Client> clients = new ArrayList<Client>();
 
     //constructeur avec le super qui extends de Personne
-    public Client(String nom, String prenom, String email, LocalDateTime dateInscription) {
+    public Client(String nom, String prenom, String email, LocalDateTime dateInscription) throws SaisieException {
         super(nom, prenom);
-        this.email = email;
+        this.setEmail(email);
         this.dateInscription = LocalDateTime.now();
     }
 
@@ -33,8 +37,12 @@ public class Client extends Personne {
     public String getEmail() {
         return this.email;
     }
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) throws SaisieException {
+        if (!validate(email)) {
+            throw new SaisieException("error sur l'email utilisateur");
+        }else{
+            this.email = email;
+        }
     }
 
     public LocalDateTime getDateInscription() {

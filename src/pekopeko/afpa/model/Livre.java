@@ -1,5 +1,7 @@
 package pekopeko.afpa.model;
 
+import pekopeko.afpa.exception.SaisieException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,10 +17,10 @@ public class Livre {
     private static List<Livre> livres = new ArrayList<Livre>();
 
     //constructeur du livre avec tout les parametres
-    public Livre(String titreLivre, String auteurLivre, int quantiteLivre) {
-        this.titreLivre = titreLivre;
-        this.auteurLivre = auteurLivre;
-        this.quantiteLivre = quantiteLivre;
+    public Livre(String titreLivre, String auteurLivre, int quantiteLivre) throws SaisieException {
+        this.setTitreLivre(titreLivre);
+        this.setAuteurLivre(auteurLivre);
+        this.setQuantiteLivre(quantiteLivre);
         this.isbn = generateRandomISBN10();
     }
 
@@ -54,25 +56,34 @@ public class Livre {
         return this.isbn;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setIsbn(String isbn) throws SaisieException {
+        if (isbn.length()!=10) {
+            System.out.println("Error ISBN du livre : ");
+        }else if (isbn.length()==10) {
+            this.isbn = isbn;
+        }
     }
 
     public String getTitreLivre() {
         return this.titreLivre;
     }
 
-    public void setTitreLivre(String titreLivre) {
-        this.titreLivre = titreLivre;
+    public void setTitreLivre(String titreLivre) throws SaisieException {
+        if (titreLivre ==null && regexAlpha(titreLivre)) {
+            throw  new SaisieException("Error sur le titre du livre : ");
+        }else{
+            this.titreLivre = titreLivre;
+        }
     }
 
     public String getAuteurLivre() {
         return this.auteurLivre;
     }
 
-    public void setAuteurLivre(String auteurLivre) {
+    public void setAuteurLivre(String auteurLivre) throws SaisieException {
         if(auteurLivre.length()<1 || auteurLivre == null || !regexAlpha(auteurLivre)){
-            System.out.println("Error Auteur du livre : ");
+            //System.out.println("Error Auteur du livre : ");
+            throw new SaisieException("Error Auteur du livre : ");
         }else{
             this.auteurLivre = auteurLivre;
         }
@@ -82,8 +93,12 @@ public class Livre {
         return this.quantiteLivre;
     }
 
-    public void setQuantiteLivre(int quantiteLivre) {
-        this.quantiteLivre = quantiteLivre;
+    public void setQuantiteLivre(int quantiteLivre) throws SaisieException {
+        if(quantiteLivre<10 || quantiteLivre>50){
+            throw new SaisieException("Error Quantite du livre : ");
+        }else{
+            this.quantiteLivre = quantiteLivre;
+        }
     }
 
     @Override

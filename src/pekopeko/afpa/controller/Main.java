@@ -16,6 +16,7 @@ package pekopeko.afpa.controller;
 //TODO : revue de code et amélioration
 //TODO : Javadoc du projet
 
+import pekopeko.afpa.exception.SaisieException;
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
 import pekopeko.afpa.model.Pret;
@@ -57,7 +58,7 @@ public class Main {
             Pret.getPrets().add(p1);
             Pret p2 = new Pret("Le bruit et la fureur", "Louis", LocalDateTime.now());
             Pret.getPrets().add(p2);
-        }catch (Exception e){
+        }catch (SaisieException e){
             System.out.println("Erreur au lancement de l'initialisation " + e.getMessage());
         }
 

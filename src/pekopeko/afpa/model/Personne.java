@@ -1,13 +1,17 @@
 package pekopeko.afpa.model;
 
+import pekopeko.afpa.exception.SaisieException;
+
+import static pekopeko.afpa.Utility.RegexUtility.regexAlpha;
+
 public class Personne {
     //attribut de la classe personne
     private String nom, prenom;
 
     //constructeur de peronne avec  2 param nom et prenom
-    public Personne(String nom, String prenom) {
-        this.nom = nom;
-        this.prenom = prenom;
+    public Personne(String nom, String prenom) throws SaisieException {
+        this.setNom(nom);
+        this.setPrenom(prenom);
     }
 
     //Getters et Setters pour acceder au attributs private
@@ -15,16 +19,24 @@ public class Personne {
         return this.nom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNom(String nom) throws SaisieException {
+        if (nom == null && !regexAlpha(nom)){
+            throw new SaisieException("Le nom n'est pas valide !");
+        }else{
+            this.nom = nom;
+        }
     }
 
     public String getPrenom() {
         return this.prenom;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setPrenom(String prenom) throws SaisieException {
+        if (nom == null && !regexAlpha(prenom)){
+            throw new SaisieException("Le prenom n'est pas valide !");
+        }else{
+            this.prenom = prenom;
+        }
     }
 
     @Override

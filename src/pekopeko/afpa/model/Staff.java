@@ -1,5 +1,7 @@
 package pekopeko.afpa.model;
 
+import pekopeko.afpa.exception.SaisieException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class Staff extends Personne {
     private static List<Staff> staffs = new ArrayList<Staff>();
 
     //contructeur pour le Staff qui extends de Personne
-    public Staff(String nom, String prenom, int id) {
+    public Staff(String nom, String prenom, int id) throws SaisieException {
         super(nom, prenom);
         this.id = id;
     }

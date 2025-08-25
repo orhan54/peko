@@ -1,6 +1,7 @@
 package pekopeko.afpa.view;
 
 import pekopeko.afpa.Utility.RegexUtility;
+import pekopeko.afpa.exception.SaisieException;
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
 import pekopeko.afpa.model.Pret;
@@ -16,7 +17,7 @@ public class viewBibliotheque {
     static Scanner sc = new Scanner(System.in); // Lecture du clavier
 
     //menu interface
-    public static void menu() { //affichage du menu accueil
+    public static void menu() throws SaisieException { //affichage du menu accueil
         try{
             System.out.println("Voici le menu : [choisir entre 1-6 et 0 pour quitter]");
             System.out.println("1 - Enregistrer un nouvel abonné : ");
@@ -40,36 +41,34 @@ public class viewBibliotheque {
         }
 
         //switch choix menu
-        if(choix>=0||choix<=6){
-            switch(choix){
-                case 1:
-                    createClient();
-                    break;
-                case 2:
-                    createLivre();
-                    break;
-                case 3:
-                    pretLivre();
-                    break;
-                case 4:
-                    afficherClient();
-                    break;
-                case 5:
-                    afficherLivre();
-                    break;
-                case 6:
-                    afficherPret();
-                    break;
-                case 0:
-                    System.out.println("Vous avez quitter l'application : ");
-                    System.exit(0);
-                    break;
-            }
+        switch (choix) {
+            case 1:
+                createClient();
+                break;
+            case 2:
+                createLivre();
+                break;
+            case 3:
+                pretLivre();
+                break;
+            case 4:
+                afficherClient();
+                break;
+            case 5:
+                afficherLivre();
+                break;
+            case 6:
+                afficherPret();
+                break;
+            case 0:
+                System.out.println("Vous avez quitter l'application : ");
+                System.exit(0);
+                break;
         }
     }
 
     //afficher les livres
-    private static void afficherLivre() {
+    private static void afficherLivre() throws SaisieException {
         int i = 1;// indice pour le numero de livre de ma liste [ex: Livre°1]
         System.out.println("Voici la liste des livres : ");
         if(Livre.getLivres().isEmpty()){
@@ -78,7 +77,7 @@ public class viewBibliotheque {
         } else {
 
             for (Livre livre : Livre.getLivres()) {
-                System.out.println("");
+                System.out.println();
                 System.out.println("Livre n°" + i++ + ":");
                 System.out.println("- Titre du livre : " + livre.getTitreLivre().toUpperCase());
                 System.out.println("- Auteur du livre : " + livre.getAuteurLivre().toUpperCase());
@@ -107,28 +106,27 @@ public class viewBibliotheque {
     }
 
     //creation d'un livre
-    private static void createLivre() {
+    private static void createLivre() throws SaisieException {
 
-        String isbn;
         String titreLivre;
         String auteurLivre;
         int quantiteLivre;
 
         sc.nextLine();
         do{
-            System.out.println("");
+            System.out.println();
             System.out.println("Vous allez ajouter un nouveau livre : ");
             System.out.print("Nom du livre : ");
             titreLivre = sc.nextLine().toUpperCase();
-            if(titreLivre.length()<1 || !regexAlpha(titreLivre) || titreLivre == null){
+            if(titreLivre.isEmpty() || !regexAlpha(titreLivre)){
                 System.out.println("Error sur le nom du livre : ");
             }
-        }while(titreLivre.length()<1 || titreLivre == null);
+        }while(titreLivre.isEmpty());
 
         do{
             System.out.print("Auteur du livre : ");
             auteurLivre = sc.nextLine().toUpperCase();
-            if(auteurLivre.length()<1 || !regexAlpha(auteurLivre) || auteurLivre == null){
+            if(auteurLivre.isEmpty() || !regexAlpha(auteurLivre)){
                 System.out.println("Error sur l'auteur du livre : ");
             }
         }while(!regexAlpha(auteurLivre));
@@ -145,11 +143,17 @@ public class viewBibliotheque {
         sc.nextLine();
         String addLivre = sc.nextLine();
         if(addLivre.equals("oui")){
-            Livre livre = new Livre(titreLivre, auteurLivre, quantiteLivre);
+            Livre livre = null;
+            try {
+                livre = new Livre(titreLivre, auteurLivre, quantiteLivre);
+            } catch (SaisieException e) {
+                System.out.println("Erreur " + e.getMessage());
+            }
             Livre.getLivres().add(livre);
 
-            System.out.println("");
+            System.out.println();
             System.out.println("[ Le nouveau livre est bien enregistrer : ]");
+            assert livre != null;
             System.out.println("Nom du livre : "+ livre.getTitreLivre());
             System.out.println("Auteur du livre : "+livre.getAuteurLivre());
             System.out.println("Quantite du livre commander : "+livre.getQuantiteLivre());
@@ -159,14 +163,12 @@ public class viewBibliotheque {
         if(addLivre.equals("non")){
             System.out.println("Saisir [0] pour revenir au menu : ");
             int revenir = sc.nextInt();
-            switch(revenir){
-                case 0:
-                    menu();
-                    break;
+            if (revenir == 0) {
+                menu();
             }
         }
 
-        System.out.println("");
+        System.out.println();
         System.out.println("Saisir [0] pour revenir au menu et [1] pour afficher la liste des livres :  ");
         int retour = sc.nextInt();
         sc.nextLine();
@@ -178,7 +180,7 @@ public class viewBibliotheque {
     }
 
     //modification du livre
-    private static void updateLivre() {
+    private static void updateLivre() throws SaisieException {
         System.out.print("Saisir le numero du livre a modifier : ");
         int j = sc.nextInt();
         sc.nextLine();
@@ -200,9 +202,13 @@ public class viewBibliotheque {
         String chooseUpdateLivre = sc.nextLine();
         if(chooseUpdateLivre.equals("oui")){
             livre.setTitreLivre(newTitreLivre);
-            livre.setAuteurLivre(newAuteurLivre);
+            try {
+                livre.setAuteurLivre(newAuteurLivre);
+            } catch (SaisieException e) {
+                System.out.println("Erreur " + e.getMessage());
+            }
             livre.setQuantiteLivre(newQuantiteLivre);
-            System.out.println("");
+            System.out.println();
             System.out.println("[ Votre livre est bien modifié ! ]");
         }
         if(chooseUpdateLivre.equals("non")){
@@ -223,7 +229,7 @@ public class viewBibliotheque {
     }
 
     //methde pour delete un livre
-    public static void deleteLivre() {
+    public static void deleteLivre() throws SaisieException {
         System.out.print("Saisir le numero du livre a supprimer : ");
         int j = sc.nextInt();
         sc.nextLine();
@@ -232,9 +238,8 @@ public class viewBibliotheque {
         String deleteLivre = sc.nextLine();
         if(deleteLivre.equals("oui")){
             //parcourir le tableau pour supprimer l'indice recharcher
-            Livre livre = Livre.getLivres().get(j-1);
 
-            livre.getLivres().remove(j-1);
+            Livre.getLivres().remove(j-1);
             System.out.println(" ");
             System.out.println("Votre livre n°"+ j + " est bien supprimer de la liste : ");
             System.out.print(" ");
@@ -260,7 +265,7 @@ public class viewBibliotheque {
     //creer un nouveau client
     public static void createClient() {
         String email, nom, prenom;
-        LocalDateTime dateInscription, dateUpdate = null;
+        LocalDateTime dateInscription;
 
         try{
             System.out.println("Créer un client : ");
@@ -270,7 +275,7 @@ public class viewBibliotheque {
             do {
                 System.out.print("Saisir le nom : ");
                 nom = sc.nextLine().toUpperCase();
-                if(!regexAlpha(nom) || nom == null) {
+                if(!regexAlpha(nom)) {
                     System.out.println("Erreur : Le nom est incorrecte");
                 }
             }while (!regexAlpha(nom));
@@ -279,7 +284,7 @@ public class viewBibliotheque {
             do {
                 System.out.print("Saisir le prenom : ");
                 prenom = sc.nextLine().toUpperCase();
-                if(!regexAlpha(prenom) || prenom == null) {
+                if(!regexAlpha(prenom)) {
                     System.out.println("Erreur : Le prenom est incorrecte");
                 }
             }while (!regexAlpha(prenom));
@@ -300,12 +305,12 @@ public class viewBibliotheque {
                 client.setEmail(email);
                 Client.getClients().add(client);
 
-                System.out.println("");
+                System.out.println();
                 System.out.println("[ Nouveau client : " + client.getNom() + "  " + client.getPrenom() + " " + client.getEmail() + "est inscrit le  " + client.getDateCreationFormatee() + " ]");
                 System.out.println(" ");
             }
             if(validateAddClient.equals("non")){
-                System.out.println("");
+                System.out.println();
                 System.out.println("Votre nouveau client a pas été ajouter : ");
             }
             System.out.println("Saisir 0 pour revenir au menu ou [1] afficher liste client : ");
@@ -322,16 +327,16 @@ public class viewBibliotheque {
     }
 
     //afficher client
-    public static void afficherClient() {
+    public static void afficherClient() throws SaisieException {
         try{
             System.out.println("voici la liste des clients : ");
             if (Client.getClients().isEmpty()) {
                 System.out.println("        La liste des clients est vide !!   =(      ");
-                System.out.println("");
+                System.out.println();
             }
             int i = 1;
             for (Client client : Client.getClients()) {
-                System.out.println("");
+                System.out.println();
                 System.out.println("Client n°" + i);
                 System.out.println(client);
                 i++;
@@ -361,7 +366,7 @@ public class viewBibliotheque {
     }
 
     //mettre a jour un client
-    private static void updateClient() {
+    private static void updateClient() throws SaisieException {
         System.out.println("Saisir le numero client a modifier : ");
         int j = sc.nextInt();
         sc.nextLine();
@@ -374,17 +379,17 @@ public class viewBibliotheque {
         System.out.println("Le nom du client a modifier est " + client.getNom() + " !!");
         System.out.print("Saisir le nouveau nom du client : ");
         String newNom = sc.nextLine().toUpperCase();
-        System.out.println("");
+        System.out.println();
 
         System.out.println("Le prenom du client a modifier est " + client.getPrenom() + " !!");
         System.out.print("Saisir le nouveau prenom du client : ");
         String newPrenom = sc.nextLine().toUpperCase();
-        System.out.println("");
+        System.out.println();
 
         System.out.println("Le email du client a modifier est " + client.getEmail() + " !!");
         System.out.print("Saisir le nouveau email du client : ");
         String newEmail = sc.nextLine().toLowerCase();
-        System.out.println("");
+        System.out.println();
 
         System.out.println("Etes vous sur de vouloir modifier : [oui/non]");
         //sc.nextLine();
@@ -393,7 +398,7 @@ public class viewBibliotheque {
             client.setNom(newNom);
             client.setPrenom(newPrenom);
             client.setEmail(newEmail);
-            System.out.println("");
+            System.out.println();
             System.out.println("[ Votre client est bien modifier : ]");
         }
 
@@ -415,7 +420,7 @@ public class viewBibliotheque {
     }
 
     //supprimer un client
-    private static void deleteClient() {
+    private static void deleteClient() throws SaisieException {
         System.out.println("Saisir le numero client a supprimer : ");
         int j = sc.nextInt();
         sc.nextLine();
@@ -426,14 +431,14 @@ public class viewBibliotheque {
             //parcourir le tableau pour supprimer le client
             Client client = Client.getClients().get(j-1);
 
-            client.getClients().remove(j-1);
-            System.out.println("");
+            Client.getClients().remove(j-1);
+            System.out.println();
             System.out.println("[ Votre client " + client.getNom() + " " + client.getPrenom() + " est bien supprimer de la liste ! ]");
-            System.out.println("");
+            System.out.println();
             System.out.println("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
-            System.out.println("");
+            System.out.println();
         } else if (chooseDeleteClient.equals("non")) {
-            System.out.println("");
+            System.out.println();
             System.out.println("Votre client n'est pas supprimer de la liste ! : ");
             System.out.print("Saisir [0] pour revenir au menu ou [1] afficher liste : ");
         }
@@ -451,10 +456,10 @@ public class viewBibliotheque {
     }
 
     //afiicher les prets et si le livre est disponible
-    private static void pretLivre() {
+    private static void pretLivre() throws SaisieException {
         LocalDateTime datePret;
         int i = 1;// indice pour le numero de livre de ma liste [ex: Livre°1]
-        System.out.println("");
+        System.out.println();
         System.out.println("Voici la liste des livres : ");
         if(Livre.getLivres().isEmpty()){
             System.out.println("La liste des livres est vide : ");
@@ -462,7 +467,7 @@ public class viewBibliotheque {
         } else {
 
             for (Livre livre : Livre.getLivres()) {
-                System.out.println("");
+                System.out.println();
                 System.out.println("Livre n°" + i++ + ":");
                 System.out.println("- Titre du livre : " + livre.getTitreLivre().toUpperCase());
                 System.out.println("- Auteur du livre : " + livre.getAuteurLivre().toUpperCase());
@@ -470,7 +475,7 @@ public class viewBibliotheque {
                 System.out.println("- ISBN du livre : " + livre.getIsbn());
             }
         }
-        System.out.println("");
+        System.out.println();
         System.out.println("Enregistrer votre livre pour le pret :");
         sc.nextLine();
         System.out.print("Saisir le titre du livre : ");
@@ -480,36 +485,46 @@ public class viewBibliotheque {
         System.out.print("");
         datePret = LocalDateTime.now();
 
-        Pret pret = new Pret(titreLivre,nomClient , datePret);
+        Pret pret = new Pret(titreLivre, nomClient, datePret);
         Pret.getPrets().add(pret);
-        System.out.println("");
+        System.out.println();
         System.out.print("L'abonné(e) au nom de " + nomClient + " a reserver le livre " +  titreLivre + " le " + pret.getDatePretFormatee() + " : ");
-        System.out.println("");
+        System.out.println();
 
-        System.out.print("Saisir 0 pour revenir au menu : ");
+        System.out.print("Saisir 0 pour revenir au menu ou [1] pour afficher les prets : ");
         int revenir = sc.nextInt();
-        if (revenir == 0) {
-            menu();
+        switch (revenir){
+            case 0:
+                menu();
+                break;
+            case 1:
+                afficherPret();
+                break;
         }
+
     }
 
-    private static void afficherPret() {
+    private static void afficherPret() throws SaisieException {
         try{
-            System.out.println("voici la liste des prets : ");
+            System.out.println();
+            System.out.println("Voici la liste des prets : ");
+            System.out.println();
             if (Pret.getPrets().isEmpty()) {
                 System.out.println("        La liste des prets est vide !!   =(      ");
-                System.out.println("");
+                System.out.println();
             }
+            int j = 1;
             for (Pret pret : Pret.getPrets()) {
-                System.out.println("==========================================================");
+                System.out.println("Pret n°" + j);
                 System.out.println("- Le titre du livre : " + pret.getTitreLivrePret());
                 System.out.println("- Nom de l'abonné(e) : " + pret.getNomLivrePret());
                 System.out.println("- Réserver le livre : " + pret.getDatePretFormatee());
+                System.out.println();
+                j++;
             }
         }catch(Exception e){
             System.err.println("Erreur : "+e.getMessage());
         }
-        System.out.println(" ");
         System.out.println("Saisir [0] pour revenir au menu : ");
         int revenir = sc.nextInt();
         if (revenir == 0) {

@@ -9,7 +9,7 @@ import static pekopeko.afpa.Utility.RegexUtility.PositifInt;
 
 public class Staff extends Personne {
     //attribut du Staff
-    private static int nextId = 1;
+    private static int nextId = 0;
     private int id;
 
     private static List<Staff> staffs = new ArrayList<Staff>();

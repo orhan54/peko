@@ -43,7 +43,7 @@ public class Livre {
     }
 
     private static int stockLivres() {
-        if(livres.size()==0){
+        if(livres.isEmpty()){
             System.out.println("Error le livre est pas en stock : ");
         } else if (livres.size()>1) {
             System.out.println("Le livre est en stock : ");
@@ -69,7 +69,7 @@ public class Livre {
     }
 
     public void setTitreLivre(String titreLivre) throws SaisieException {
-        if (titreLivre ==null && regexAlpha(titreLivre)) {
+        if (titreLivre ==null || !regexAlpha(titreLivre)) {
             throw  new SaisieException("Error sur le titre du livre : ");
         }else{
             this.titreLivre = titreLivre;
@@ -81,7 +81,7 @@ public class Livre {
     }
 
     public void setAuteurLivre(String auteurLivre) throws SaisieException {
-        if(auteurLivre.length()<1 || auteurLivre == null || !regexAlpha(auteurLivre)){
+        if(auteurLivre.isEmpty() && !regexAlpha(auteurLivre)){
             //System.out.println("Error Auteur du livre : ");
             throw new SaisieException("Error Auteur du livre : ");
         }else{

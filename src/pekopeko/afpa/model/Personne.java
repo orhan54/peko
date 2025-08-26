@@ -32,7 +32,7 @@ public class Personne {
     }
 
     public void setPrenom(String prenom) throws SaisieException {
-        if (nom == null && !regexAlpha(prenom)){
+        if (nom == null || !regexAlpha(prenom)){
             throw new SaisieException("Le prenom n'est pas valide !");
         }else{
             this.prenom = prenom;

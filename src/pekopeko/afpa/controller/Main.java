@@ -20,12 +20,15 @@ import pekopeko.afpa.exception.SaisieException;
 import pekopeko.afpa.model.Client;
 import pekopeko.afpa.model.Livre;
 import pekopeko.afpa.model.Pret;
+import pekopeko.afpa.view.swing.MenuSwing;
+
 import java.time.LocalDateTime;
 import static pekopeko.afpa.view.viewBibliotheque.menu;
 
 public class Main {
     public static void main(String[] args) {
         try {
+            MenuSwing myMenu = new MenuSwing();
             Main main = new Main();
             main.run();
         }catch (Exception e){

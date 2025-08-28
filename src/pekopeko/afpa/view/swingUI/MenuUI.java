@@ -1,7 +1,6 @@
 package pekopeko.afpa.view.swingUI;
 
 import javax.swing.*;
-import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,68 +17,96 @@ public class MenuUI extends JFrame{
     private JButton afficherLivre;
     private JButton afficherPret;
     private JButton afficherStaff;
+    private JButton addClientStaffButton;
 
     public MenuUI() {
 
+        ImageIcon imageIcon = new ImageIcon("C:\\Users\\User\\Pictures\\logo.jpg");
+        Dimension dimension = new Dimension(600, 800);
+
         //les attributs
         this.setTitle("Bibliothèque");
-        this.setResizable(false);
-
+        this.setIconImage(imageIcon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        this.setPreferredSize(dimension);
+        this.setResizable(false);
         this.setContentPane(contentPane);
+        this.setLocationRelativeTo(null);
         this.pack();
 
 
-        addClient.addActionListener(new ActionListener() {
+        addClientStaffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                displayClientStaff();
             }
         });
         addLivre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addLivre();
             }
         });
         listePret.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                addPret();
             }
         });
         afficherClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                displayClient();
             }
         });
         afficherLivre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                displayLivre();
             }
         });
         afficherPret.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                displayPret();
             }
         });
         afficherStaff.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                displayStaff();
             }
         });
     }
 
-    public static class MainUI {
-        public static void main(String[] args) throws Exception {
-            UIManager.setLookAndFeel(new NimbusLookAndFeel());
-            MenuUI myMenu = new MenuUI();
-            myMenu.setVisible(true);
-        }
+    private void displayClientStaff() {
+        ChooseCientStaff chooseCientStaff = new ChooseCientStaff();
+        chooseCientStaff.setVisible(true);
     }
+
+    private void addLivre() {
+
+    }
+
+    private void addPret() {
+
+    }
+
+    private void displayClient() {
+
+    }
+
+    private void displayLivre() {
+
+    }
+
+    private void displayPret() {
+
+    }
+
+    private void displayStaff() {
+
+    }
+
+
 }

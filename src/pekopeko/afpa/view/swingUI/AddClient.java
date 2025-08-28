@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 
 public class AddClient extends JFrame {
 
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField textFieldnom;
+    private JTextField textFieldPrenom;
+    private JTextField textFieldEmail;
     private JButton validerButton;
     private JButton annulerButton;
     private JPanel contentPane;

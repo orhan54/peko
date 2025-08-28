@@ -8,6 +8,7 @@ import java.util.List;
 import static pekopeko.afpa.Utility.RegexUtility.PositifInt;
 
 public class Staff extends Personne {
+    public static int getID;
     //attribut du Staff
     private static int nextId = 0;
     private int id;

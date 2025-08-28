@@ -10,8 +10,8 @@ public class AddPret extends JFrame {
     private JPanel logoPret;
     private JPanel mainPret;
     private JPanel footerPret;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField textFieldNomLivre;
+    private JTextField textFieldNomClient;
     private JButton validerButton;
     private JButton annulerButton;
 

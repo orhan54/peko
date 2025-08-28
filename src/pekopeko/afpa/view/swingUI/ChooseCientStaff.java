@@ -1,5 +1,7 @@
 package pekopeko.afpa.view.swingUI;
 
+import pekopeko.afpa.exception.SaisieException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -43,7 +45,11 @@ public class ChooseCientStaff extends JFrame {
         addStaffButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addStaff();
+                try {
+                    addStaff();
+                } catch (SaisieException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         retourButton.addActionListener(new ActionListener() {
@@ -59,7 +65,7 @@ public class ChooseCientStaff extends JFrame {
         ajoutClient.setVisible(true);
     }
 
-    private void addStaff() {
+    private void addStaff() throws SaisieException {
         AddStaff ajoutStaff = new AddStaff();
         ajoutStaff.setVisible(true);
     }

@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 public class AddLivre extends JFrame {
     private JPanel contentPane;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField textFieldTitreLivre;
+    private JTextField textFieldAuteurLivre;
     private JTextField textField3;
     private JButton validerButton;
     private JButton annulerButton;

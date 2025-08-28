@@ -5,17 +5,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddStaff extends JFrame{
+public class AddLivre extends JFrame {
+    private JPanel contentPane;
     private JTextField textField1;
     private JTextField textField2;
+    private JTextField textField3;
     private JButton validerButton;
     private JButton annulerButton;
-    private JPanel contentPane;
-    private JPanel logoAddStaff;
-    private JPanel mainAddStaff;
-    private JPanel footerAddStaff;
+    private JPanel logoAddLivre;
+    private JPanel mainAddLivre;
+    private JPanel footerAddLivre;
 
-    public AddStaff() {
+    public AddLivre() {
 
         ImageIcon imageIcon = new ImageIcon("C:\\Users\\User\\Pictures\\logo.jpg");
         Dimension dimension = new Dimension(1200, 1000);
@@ -30,11 +31,11 @@ public class AddStaff extends JFrame{
 
         this.pack();
         this.setLocationRelativeTo(null);
-
+        
         validerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                validerStaff();
+                enregistrerLivre();
             }
         });
         annulerButton.addActionListener(new ActionListener() {
@@ -43,15 +44,14 @@ public class AddStaff extends JFrame{
                 retour();
             }
         });
-
     }
 
-    private void validerStaff() {
-
+    private void enregistrerLivre() {
     }
 
     private void retour() {
         this.dispose();
     }
+
 
 }

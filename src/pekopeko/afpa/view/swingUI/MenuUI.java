@@ -7,22 +7,23 @@ import java.awt.event.ActionListener;
 
 public class MenuUI extends JFrame{
     private JPanel contentPane;
-    private JPanel title;
+    private JPanel logoMenu;
     private JPanel mainContent;
     private JPanel footerContent;
     private JButton addClient;
     private JButton addLivre;
-    private JButton listePret;
+    private JButton addPret;
     private JButton afficherClient;
     private JButton afficherLivre;
     private JButton afficherPret;
     private JButton afficherStaff;
     private JButton addClientStaffButton;
+    private JButton quitterButton;
 
     public MenuUI() {
 
         ImageIcon imageIcon = new ImageIcon("C:\\Users\\User\\Pictures\\logo.jpg");
-        Dimension dimension = new Dimension(600, 800);
+        Dimension dimension = new Dimension(1200, 1000);
 
         //les attributs
         this.setTitle("Bibliothèque");
@@ -31,9 +32,9 @@ public class MenuUI extends JFrame{
         this.setPreferredSize(dimension);
         this.setResizable(false);
         this.setContentPane(contentPane);
-        this.setLocationRelativeTo(null);
-        this.pack();
 
+        this.pack();
+        this.setLocationRelativeTo(null);
 
         addClientStaffButton.addActionListener(new ActionListener() {
             @Override
@@ -47,7 +48,7 @@ public class MenuUI extends JFrame{
                 addLivre();
             }
         });
-        listePret.addActionListener(new ActionListener() {
+        addPret.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addPret();
@@ -77,6 +78,12 @@ public class MenuUI extends JFrame{
                 displayStaff();
             }
         });
+        quitterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                quitter();
+            }
+        });
     }
 
     private void displayClientStaff() {
@@ -85,11 +92,13 @@ public class MenuUI extends JFrame{
     }
 
     private void addLivre() {
-
+        AddLivre addLivre = new AddLivre();
+        addLivre.setVisible(true);
     }
 
     private void addPret() {
-
+        AddPret addPret = new AddPret();
+        addPret.setVisible(true);
     }
 
     private void displayClient() {
@@ -101,12 +110,21 @@ public class MenuUI extends JFrame{
     }
 
     private void displayPret() {
-
+        List myList = new List();
+        myList.setVisible(true);
     }
 
     private void displayStaff() {
 
     }
+
+    private void quitter() {
+        int reponse = JOptionPane.showConfirmDialog(MenuUI.this, "Voulez-vous quitter l'application ?", "Quitter", JOptionPane.YES_NO_OPTION);
+        if (reponse == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }
+
 
 
 }

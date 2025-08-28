@@ -5,20 +5,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ChooseCientStaff extends JFrame {
-    private JButton chooseAddClientButton;
-    private JButton addStaffButton;
-    private JButton addClientButton;
-    private JButton retourButton;
+public class List extends JFrame {
     private JPanel contentPane;
-    private JPanel logoChoose;
-    private JPanel titleChooseClientStaff;
-    private JPanel chooseButon;
-    private JPanel backContent;
-    private JPanel footerChoose;
-    private JButton chooseAddStaffButton;
+    private JPanel logoList;
+    private JPanel mainList;
+    private JPanel FooterList;
+    private JList list1;
+    private JButton ajouterButton;
+    private JButton modifierButton;
+    private JButton supprimerButton;
+    private JButton retourButton;
+    private JScrollBar scrollBar1;
+    private JPanel listName;
 
-    public ChooseCientStaff() {
+    public List() {
 
         ImageIcon imageIcon = new ImageIcon("C:\\Users\\User\\Pictures\\logo.jpg");
         Dimension dimension = new Dimension(1200, 1000);
@@ -26,7 +26,7 @@ public class ChooseCientStaff extends JFrame {
         //les attributs
         this.setTitle("Bibliothèque");
         this.setIconImage(imageIcon.getImage());
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(dimension);
         this.setResizable(false);
         this.setContentPane(contentPane);
@@ -34,38 +34,42 @@ public class ChooseCientStaff extends JFrame {
         this.pack();
         this.setLocationRelativeTo(null);
 
-        addClientButton.addActionListener(new ActionListener() {
+        ajouterButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addClient();
+                addList();
             }
         });
-        addStaffButton.addActionListener(new ActionListener() {
+        modifierButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addStaff();
+                updateList();
+            }
+        });
+        supprimerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteList();
             }
         });
         retourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                retourButton();
+                retour();
             }
         });
     }
 
-    private void addClient() {
-        AddClient ajoutClient = new AddClient();
-        ajoutClient.setVisible(true);
-    }
+    private void addList() {
 
-    private void addStaff() {
-        AddStaff ajoutStaff = new AddStaff();
-        ajoutStaff.setVisible(true);
     }
+    private void updateList() {
 
-    private void retourButton() {
+    }
+    private void deleteList() {
+
+    }
+    private void retour() {
         this.dispose();
     }
-
 }

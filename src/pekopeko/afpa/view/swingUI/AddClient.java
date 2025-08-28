@@ -21,17 +21,18 @@ public class AddClient extends JFrame {
     public AddClient() {
 
         ImageIcon imageIcon = new ImageIcon("C:\\Users\\User\\Pictures\\logo.jpg");
-        Dimension dimension = new Dimension(600, 800);
+        Dimension dimension = new Dimension(1200, 1000);
 
         //les attributs
         this.setTitle("Bibliothèque");
         this.setIconImage(imageIcon.getImage());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setPreferredSize(dimension);
         this.setResizable(false);
         this.setContentPane(contentPane);
-        this.setLocationRelativeTo(null);
+
         this.pack();
+        this.setLocationRelativeTo(null);
 
         validerButton.addActionListener(new ActionListener() {
             @Override

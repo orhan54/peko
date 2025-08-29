@@ -1,9 +1,13 @@
 package pekopeko.afpa.view.swingUI;
 
+import pekopeko.afpa.exception.SaisieException;
+import pekopeko.afpa.model.Client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 public class MenuUI extends JFrame{
     private JPanel contentPane;
@@ -19,6 +23,9 @@ public class MenuUI extends JFrame{
     private JButton afficherStaff;
     private JButton addClientStaffButton;
     private JButton quitterButton;
+    private String nom;
+    private String prenom;
+    private String email;
 
     public MenuUI() {
 
@@ -57,7 +64,11 @@ public class MenuUI extends JFrame{
         afficherClient.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                displayClient();
+                try {
+                    displayClient();
+                } catch (SaisieException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         afficherLivre.addActionListener(new ActionListener() {
@@ -101,21 +112,24 @@ public class MenuUI extends JFrame{
         addPret.setVisible(true);
     }
 
-    private void displayClient() {
-
+    private void displayClient() throws SaisieException {
+        ListClient myListClient = new ListClient();
+        myListClient.setVisible(true);
     }
 
     private void displayLivre() {
-
+        ListLivre listLivre = new ListLivre();
+        listLivre.setVisible(true);
     }
 
     private void displayPret() {
-        List myList = new List();
+        ListPret myList = new ListPret();
         myList.setVisible(true);
     }
 
     private void displayStaff() {
-
+        ListStaff listStaff = new ListStaff();
+        listStaff.setVisible(true);
     }
 
     private void quitter() {

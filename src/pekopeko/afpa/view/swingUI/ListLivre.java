@@ -11,11 +11,11 @@ public class ListLivre extends JFrame {
     private JPanel logoListLivre;
     private JPanel mainListLivre;
     private JPanel footerListLivre;
-    private JList list1;
     private JButton ajouterButton;
     private JButton annulerButton;
     private JButton supprimerButton;
     private JButton modifierButton;
+    private JTable table1;
 
 
     public ListLivre() {

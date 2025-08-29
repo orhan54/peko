@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 public class ListClient extends JFrame {
     private JPanel contentPane;
     private JPanel logoListClient;
-    private JScrollBar scrollBar1;
     private JButton ajouterButton;
     private JButton modifierButton;
     private JButton supprimerButton;
@@ -16,7 +15,7 @@ public class ListClient extends JFrame {
     private JButton modifierButton1;
     private JButton annulerButton;
     private JButton supprimerButton1;
-    private JList listClient;
+    private JTable table1;
 
     public ListClient() {
 

@@ -13,8 +13,10 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
-        <border type="none"/>
+        <properties>
+          <background color="-3749171"/>
+        </properties>
+        <border type="etched"/>
         <children>
           <component id="9a769" class="javax.swing.JLabel">
             <constraints>
@@ -56,7 +58,9 @@
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
-                    <properties/>
+                    <properties>
+                      <font/>
+                    </properties>
                     <border type="none" title="Création d'un client"/>
                     <children>
                       <component id="216b1" class="javax.swing.JLabel">
@@ -288,7 +292,9 @@
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-3749171"/>
+        </properties>
         <border type="etched"/>
         <children>
           <component id="ce12d" class="javax.swing.JLabel">
